@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meerkat - Audiovisuals</title>
+</head>
+
+<body>
+    <h1>Meerkat Audiovisuals</h1>
+
+    <ul>
+        <% for(let audiovisual of all_audiovisuals) { %>
+            <li>
+                <%= audiovisual.title %>
+            </li>
+            <li>
+                <%= audiovisual.director %>
+            </li>
+            <li>
+                <%= audiovisual.main_cast %>
+            </li>
+            <li>
+                <%= audiovisual.country %>
+            </li>
+
+            <br>
+            <% } %>
+    </ul>
+</body>
+
+</html>

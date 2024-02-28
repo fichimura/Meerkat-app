@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
-const Movie = require('./models/movie');
+const Audiovisual = require('./models/audiovisuals');
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
 
@@ -20,10 +20,9 @@ app.get('/', (req, res) => {
     res.render('home');
 });
 
-app.get('/newMovie', async (req, res) => {
-    const movie = new Movie({ title: "Ratatouille", year: '2007' });
-    await movie.save();
-    res.send(movie);
+app.get('/audiovisuals', async (req, res) => {
+    const all_audiovisuals = await Audiovisual.find({});
+    res.render('audiovisuals/index', { all_audiovisuals });
 });
 
 app.listen(3000, () => {

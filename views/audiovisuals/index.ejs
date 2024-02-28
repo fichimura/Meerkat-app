@@ -9,22 +9,16 @@
 
 <body>
     <h1>Meerkat Audiovisuals</h1>
+    <div>
+        <a href="/audiovisuals/new">New audiovisual</a>
+    </div>
 
+    <hr>
     <ul>
         <% for(let audiovisual of all_audiovisuals) { %>
-            <li>
+            <a href="/audiovisuals/<%= audiovisual._id %>">
                 <%= audiovisual.title %>
-            </li>
-            <li>
-                <%= audiovisual.director %>
-            </li>
-            <li>
-                <%= audiovisual.main_cast %>
-            </li>
-            <li>
-                <%= audiovisual.country %>
-            </li>
-
+            </a>
             <br>
             <% } %>
     </ul>

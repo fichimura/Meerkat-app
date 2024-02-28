@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Audiovisual</title>
+</head>
+
+<body>
+    <form action="/audiovisuals" method="POST">
+        <div>
+            <label for="type">Type</label>
+            <input type="text" id="type" name="audiovisual[type]">
+        </div>
+        <div>
+            <label for="title">Title</label>
+            <input type="text" id="title" name="audiovisual[title]">
+        </div>
+        <button>
+            Add audiovisual
+        </button>
+    </form>
+
+    <footer>
+        <a href="/audiovisuals">Back to all audiovisuals</a>
+    </footer>
+</body>
+
+</html>

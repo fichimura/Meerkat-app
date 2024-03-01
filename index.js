@@ -1,8 +1,8 @@
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
+const methodOverride = require('method-override');
 const Audiovisual = require('./models/audiovisuals');
-const audiovisuals = require('./models/audiovisuals');
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
 
@@ -18,6 +18,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -41,6 +42,17 @@ app.post('/audiovisuals', async (req, res) => {
 app.get('/audiovisuals/:id', async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.id);
     res.render('audiovisuals/show', { audiovisual });
+});
+
+app.get('/audiovisuals/:id/edit', async (req, res) => {
+    const audiovisual = await Audiovisual.findById(req.params.id);
+    res.render('audiovisuals/edit', { audiovisual });
+});
+
+app.put('/audiovisuals/:id', async (req, res) => {
+    const { id } = req.params;
+    const audiovisual = await Audiovisual.findByIdAndUpdate(id, { ...req.body.audiovisual });
+    res.redirect(`/audiovisuals/${audiovisual._id}`);
 });
 
 app.listen(3000, () => {

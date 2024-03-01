@@ -23,7 +23,12 @@
     </p>
 
     <p>
-        <a href="/audiovisuals/<%= audiovisual._id %>/edit">Edit audiovisual</a>
+        <a href="/audiovisuals/<%= audiovisual._id%>/edit">Edit audiovisual</a>
+    </p>
+    <p>
+    <form action="/audiovisuals/<%=audiovisual._id%>?_method=DELETE" method="POST">
+        <button>Delete audiovisual</button>
+    </form>
     </p>
     <footer>
         <a href="/audiovisuals">Back to all audiovisuals</a>

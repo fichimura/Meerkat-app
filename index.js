@@ -55,6 +55,12 @@ app.put('/audiovisuals/:id', async (req, res) => {
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 });
 
+app.delete('/audiovisuals/:id', async (req, res) => {
+    const { id } = req.params;
+    await Audiovisual.findByIdAndDelete(id);
+    res.redirect('/audiovisuals');
+});
+
 app.listen(3000, () => {
     console.log("LISTENING ON PORT 3000");
 });

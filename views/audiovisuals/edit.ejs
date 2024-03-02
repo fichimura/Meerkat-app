@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Audiovisual</title>
-</head>
-
-<body>
+<% layout('layouts/boilerplate') %>
     <h1>Edit audiovisual</h1>
     <form action="/audiovisuals/<%=audiovisual._id%>?_method=PUT" method="POST">
         <div>
@@ -24,8 +15,5 @@
     </form>
 
     <footer>
-        <a href="/audiovisuals/< %=audiovisual._id %>">Back to audiovisual</a>
+        <a href="/audiovisuals/<%=audiovisual._id%>">Back to audiovisual</a>
     </footer>
-</body>
-
-</html>

@@ -6,6 +6,7 @@ const methodOverride = require('method-override');
 const Audiovisual = require('./models/audiovisuals');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/expressError');
+const { audiovisualSchema } = require('./JoiSchemas/audiovisualJoiSchema');
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
 
@@ -24,6 +25,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
+const validateAudiovisual = (req, res, next) => {
+    const { error } = audiovisualSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
 app.get('/', (req, res) => {
     res.render('home');
 });
@@ -37,8 +48,7 @@ app.get('/audiovisuals/new', (req, res) => {
     res.render('audiovisuals/new')
 });
 
-app.post('/audiovisuals', catchAsync(async (req, res) => {
-    if (!req.body.audiovisual) throw new ExpressError("Invalid data to create audiovisual", 400);
+app.post('/audiovisuals', validateAudiovisual, catchAsync(async (req, res) => {
     const audiovisual = new Audiovisual(req.body.audiovisual);
     await audiovisual.save();
     res.redirect(`/audiovisuals/${audiovisual._id}`);
@@ -54,7 +64,7 @@ app.get('/audiovisuals/:id/edit', catchAsync(async (req, res) => {
     res.render('audiovisuals/edit', { audiovisual });
 }));
 
-app.put('/audiovisuals/:id', catchAsync(async (req, res) => {
+app.put('/audiovisuals/:id', validateAudiovisual, catchAsync(async (req, res) => {
     const { id } = req.params;
     const audiovisual = await Audiovisual.findByIdAndUpdate(id, { ...req.body.audiovisual });
     res.redirect(`/audiovisuals/${audiovisual._id}`);

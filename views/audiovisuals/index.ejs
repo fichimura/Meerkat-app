@@ -1,40 +1,39 @@
 <% layout('layouts/boilerplate') %>
 
     <h1>Meerkat Audiovisuals</h1>
-    <div>
-        <a href="/audiovisuals/new">New audiovisual</a>
+    <div class="d-flex flex-row justify-content-end">
+        <a class="btn btn-success" href="/audiovisuals/new">New audiovisual</a>
     </div>
 
     <hr>
     <% for(let audiovisual of all_audiovisuals) { %>
         <div class="card mb-3">
-            <div class="row">
-                <div class="card-body">
-                    <h5 class="card-title fw-bold">
-                        <%= audiovisual.title %>
-                    </h5>
-                    <div lass="d-flex flex-row">
-                        <p class="fw-bold">Description:</p>
-                        <p class="card-text">
-                            <%= audiovisual.description %>
-                        </p>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <p class="fw-bold">Director:</p>
-                        <p class="card-text">
-                            <%= audiovisual.director %>
-                        </p>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <p class="fw-bold">Release year:</p>
-                        <p class="card-text">
-                            <%= audiovisual.release_year %>
-                        </p>
-                    </div>
-                    <div>
-                        <a class="btn btn-primary" href="/audiovisuals/<%= audiovisual._id%>">View
-                            %></a>
-                    </div>
+            <div class="card-body">
+                <h5 class="card-title fw-bold">
+                    <%= audiovisual.title %>
+                </h5>
+                <div lass="d-flex flex-row">
+                    <p class="fw-bold">Description:</p>
+                    <p class="card-text">
+                        <%= audiovisual.description %>
+                    </p>
+                </div>
+                <div class="d-flex flex-row">
+                    <p class="fw-bold">Director:</p>
+                    <p class="card-text">
+                        <%= audiovisual.director %>
+                    </p>
+                </div>
+                <div class="d-flex flex-row">
+                    <p class="fw-bold">Release year:</p>
+                    <p class="card-text">
+                        <%= audiovisual.release_year %>
+                    </p>
+                </div>
+                <div>
+                    <a class="btn btn-primary" href="/audiovisuals/<%= audiovisual._id%>">View
+                        %></a>
                 </div>
             </div>
-            <% } %>
+        </div>
+        <% } %>

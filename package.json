@@ -18,5 +18,8 @@
     "method-override": "^3.0.0",
     "mongoose": "^8.2.0",
     "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2"
   }
 }

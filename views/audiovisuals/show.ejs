@@ -11,17 +11,35 @@
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Director: </div>
-            <%=audiovisual.director %>
+            <% if(audiovisual.director) { %>
+                <%= audiovisual.director %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No director informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Main cast: </div>
-            <%=audiovisual.main_cast %>
+            <% if(audiovisual.main_cast) { %>
+                <%= audiovisual.main_cast %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No main cast informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Country: </div>
-            <%=audiovisual.country %>
+            <% if(audiovisual.country) { %>
+                <%= audiovisual.country %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No country informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
@@ -31,7 +49,13 @@
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Release year: </div>
-            <%=audiovisual.release_year %>
+            <% if(audiovisual.release_year) { %>
+                <%= audiovisual.release_year %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No release year informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
@@ -41,17 +65,35 @@
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Duration: </div>
-            <%=audiovisual.duration %>
+            <% if(audiovisual.duration) { %>
+                <%= audiovisual.duration %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No duration informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Listed in: </div>
-            <%=audiovisual.listed_in %>
+            <% if(audiovisual.listed_in) { %>
+                <%= audiovisual.listed_in %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No listed in informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row">
             <div class="fw-bold me-1">Description: </div>
-            <%=audiovisual.description %>
+            <% if(audiovisual.description) { %>
+                <%= audiovisual.description %>
+                    <% }else { %>
+                        <div class="fw-light fst-italic">
+                            No description informed
+                        </div>
+                        <% }%>
         </div>
 
         <div class="d-flex flex-row justify-content-evenly mt-3">

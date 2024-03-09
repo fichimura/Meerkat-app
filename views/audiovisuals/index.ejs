@@ -14,21 +14,42 @@
                 </h5>
                 <div lass="d-flex flex-row">
                     <p class="fw-bold">Description:</p>
-                    <p class="card-text">
-                        <%= audiovisual.description %>
-                    </p>
+
+                    <% if(audiovisual.description) { %>
+                        <p class="text-truncate">
+                            <%= audiovisual.description %>
+                        </p>
+                        <% }else { %>
+                            <div class="fw-light fst-italic">
+                                No description informed
+                            </div>
+                            <% }%>
                 </div>
                 <div class="d-flex flex-row">
                     <p class="fw-bold">Director:</p>
-                    <p class="card-text">
-                        <%= audiovisual.director %>
-                    </p>
+
+                    <% if(audiovisual.director) { %>
+                        <p class="card-text">
+                            <%= audiovisual.director %>
+                        </p>
+                        <% }else { %>
+                            <div class="fw-light fst-italic">
+                                No director informed
+                            </div>
+                            <% }%>
                 </div>
                 <div class="d-flex flex-row">
                     <p class="fw-bold">Release year:</p>
-                    <p class="card-text">
-                        <%= audiovisual.release_year %>
-                    </p>
+
+                    <% if(audiovisual.release_year) { %>
+                        <p class="card-text">
+                            <%= audiovisual.release_year %>
+                        </p>
+                        <% }else { %>
+                            <div class="fw-light fst-italic">
+                                No release year informed
+                            </div>
+                            <% }%>
                 </div>
                 <div>
                     <a class="btn btn-primary" href="/audiovisuals/<%= audiovisual._id%>">View

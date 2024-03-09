@@ -8,7 +8,7 @@ const AudiovisualSchema = new Schema({
     main_cast: String,
     country: String,
     date_added: String,
-    release_year: String,
+    release_year: Number,
     rating: String,
     duration: String,
     listed_in: String,

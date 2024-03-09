@@ -5,6 +5,13 @@ module.exports.audiovisualSchema = Joi.object({
     audiovisual: Joi.object({
         type: Joi.string().required(),
         title: Joi.string().required(),
-        rating: Joi.number().max(5).min(0).precision(1).required()
+        director: Joi.string().allow(''),
+        main_cast: Joi.string().allow(''),
+        country: Joi.string().allow(''),
+        release_year: Joi.number().allow(''),
+        rating: Joi.number().max(5).min(0).precision(1).required(),
+        duration: Joi.string().allow(''),
+        listed_in: Joi.string().allow(''),
+        description: Joi.string().allow('')
     }).required()
 });

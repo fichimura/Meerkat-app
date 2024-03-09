@@ -49,6 +49,9 @@ app.get('/audiovisuals/new', (req, res) => {
 });
 
 app.post('/audiovisuals', validateAudiovisual, catchAsync(async (req, res) => {
+    const todayDate = new Date();
+    req.body.audiovisual.date_added = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
+    console.log(req.body.audiovisual);
     const audiovisual = new Audiovisual(req.body.audiovisual);
     await audiovisual.save();
     res.redirect(`/audiovisuals/${audiovisual._id}`);

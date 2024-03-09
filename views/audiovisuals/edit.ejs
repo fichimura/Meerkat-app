@@ -4,69 +4,81 @@
         <div class="col-6 offset-3">
             <form action="/audiovisuals/<%=audiovisual._id%>?_method=PUT" method="POST" class="validate-form"
                 novalidate>
-                <div class="mb-2">
-                    <label class="form-label" for="type">Type</label>
-                    <input class="form-control" type="text" id="type" name="audiovisual[type]"
-                        value="<%= audiovisual.type %>" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" id="title" name="audiovisual[title]"
-                        value="<%= audiovisual.title %>" required>
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="director">Director</label>
-                    <input class="form-control" type="text" id="director" name="audiovisual[director]"
-                        value="<%= audiovisual.director %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="main_cast">Main Cast</label>
-                    <input class="form-control" type="text" id="main_cast" name="audiovisual[main_cast]"
-                        value="<%= audiovisual.main_cast %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="country">Country</label>
-                    <input class="form-control" type="text" id="country" name="audiovisual[country]"
-                        value="<%= audiovisual.country %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="date_added">Date added</label>
-                    <input class="form-control" type="date" id="date_added" name="audiovisual[date_added]"
-                        value="<%= audiovisual.date_added%>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="release_year">Release year</label>
-                    <input class="form-control" type="date" id="release_year" name="audiovisual[release_year]"
-                        value="<%= audiovisual.release_year %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="rating">Rating</label>
-                    <input class="form-range" type="range" min="0" max="5" step="0.5" id="rating"
-                        name="audiovisual[rating]" value="<%= audiovisual.rating %>" required>
-                </div>
-                <div class=" mb-2">
-                    <label class="form-label" for="duration">Duration</label>
-                    <input class="form-control" type="text" id="duration" name="audiovisual[duration]"
-                        value="<%= audiovisual.duration %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="listed_in">Listed in</label>
-                    <input class="form-control" type="text" id="listed_in" name="audiovisual[listed_in]"
-                        value="<%= audiovisual.listed_in %>">
-                </div>
-                <div class="mb-2">
-                    <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" id="description"
-                        name="audiovisual[description]"> <%=audiovisual.description %></textarea>
-                </div>
-
-                <div class="d-flex flex-row justify-content-between mb-3">
-                    <button class="btn btn-secondary">
-                        Update audiovisual
-                    </button>
-                    <a class="btn btn-primary" href="/audiovisuals">Back to all audiovisuals</a>
-                </div>
-            </form>
-
         </div>
+        <div class="mb-3 fw-bold">
+            This audiovisual was added in <%= audiovisual.date_added %>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="type">Type</label>
+            <input class="form-control" type="text" id="type" name="audiovisual[type]" value="<%= audiovisual.type %>"
+                required>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="title">Title</label>
+            <input class="form-control" type="text" id="title" name="audiovisual[title]"
+                value="<%= audiovisual.title %>" required>
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="director">Director</label>
+            <input class="form-control" type="text" id="director" name="audiovisual[director]"
+                value="<%= audiovisual.director %>">
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="main_cast">Main Cast</label>
+            <input class="form-control" type="text" id="main_cast" name="audiovisual[main_cast]"
+                value="<%= audiovisual.main_cast %>">
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="country">Country</label>
+            <input class="form-control" type="text" id="country" name="audiovisual[country]"
+                value="<%= audiovisual.country %>">
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="release_year">Release year</label>
+            <input class="form-control" type="date" id="release_year" name="audiovisual[release_year]"
+                value="<%= audiovisual.release_year %>">
+        </div>
+        <div class="mb-2">
+            <div class="d-flex flex-row">
+                <label class="form-label" for="rating">Rating: </label>
+                <span class="fw-bold ms-2" id="rangeValue">5</span>
+            </div>
+            <input class="form-range" type="range" min="0" max="5" step="0.5" id="rating" name="audiovisual[rating]"
+                value="<%= audiovisual.rating %>" required>
+
+            <script>
+                let rangeInput = document.getElementById('rating');
+                let rangeValue = document.getElementById('rangeValue');
+
+                rangeInput.addEventListener('input', () => {
+                    rangeValue.textContent = rangeInput.value;
+                });
+            </script>
+        </div>
+        <div class=" mb-2">
+            <label class="form-label" for="duration">Duration</label>
+            <input class="form-control" type="text" id="duration" name="audiovisual[duration]"
+                value="<%= audiovisual.duration %>">
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="listed_in">Listed in</label>
+            <input class="form-control" type="text" id="listed_in" name="audiovisual[listed_in]"
+                value="<%= audiovisual.listed_in %>">
+        </div>
+        <div class="mb-2">
+            <label class="form-label" for="description">Description</label>
+            <textarea class="form-control" type="text" id="description"
+                name="audiovisual[description]"> <%=audiovisual.description %></textarea>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between mb-3">
+            <button class="btn btn-secondary">
+                Update audiovisual
+            </button>
+            <a class="btn btn-primary" href="/audiovisuals">Back to all audiovisuals</a>
+        </div>
+        </form>
+
+
+    </div>
     </div>

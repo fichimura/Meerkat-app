@@ -1,9 +1,9 @@
 <% layout('layouts/boilerplate') %>
-    <div class="alert alert-danger col-9 offset-2" role="alert">
+    <div class="alert alert-danger container" role="alert">
         <h4 class="alert-heading">
             <%= err.message%>
         </h4>
-        <div>
+        <div class="text-wrap">
             <%= err.stack %>
         </div>
     </div>

@@ -19,7 +19,7 @@ const AudiovisualSchema = new Schema({
     duration: String,
     listed_in: String,
     description: String,
-    rating: [
+    reviews: [
         {
             type: Schema.Types.ObjectId,
             ref: audiovisualReview

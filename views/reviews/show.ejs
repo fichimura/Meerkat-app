@@ -2,7 +2,7 @@
     <h2>Review of <%= audiovisual.title %>
     </h2>
 
-    <form action="/audiovisuals/<% audiovisual._id %>/review/?_method=POST" method="POST">
+    <form action="/audiovisuals/<%= audiovisual._id %>/reviews" method="POST">
         <div class="mb-2">
             <div class="d-flex flex-row">
                 <label class="form-label" for="rating">Rating: </label>

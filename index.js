@@ -7,6 +7,7 @@ const Audiovisual = require('./models/audiovisuals');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/expressError');
 const { audiovisualSchema } = require('./JoiSchemas/audiovisualJoiSchema');
+const Review = require('./models/audiovisualReview');
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
 
@@ -69,6 +70,15 @@ app.get('/audiovisuals/:id/edit', catchAsync(async (req, res) => {
 app.get('/audiovisuals/:id/reviews', catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.id);
     res.render('reviews/show', { audiovisual });
+}));
+
+app.post('/audiovisuals/:id/reviews', catchAsync(async (req, res) => {
+    const audiovisual = await Audiovisual.findById(req.params.id);
+    const review = new Review(req.body.review);
+    audiovisual.reviews.push(review);
+    await review.save();
+    await audiovisual.save();
+    res.redirect(`/audiovisuals/${audiovisual._id}`);
 }));
 
 app.put('/audiovisuals/:id', validateAudiovisual, catchAsync(async (req, res) => {

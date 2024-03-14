@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const audiovisualReview = require('./audiovisualReview');
+const Review = require('./audiovisualReview');
 const Schema = mongoose.Schema;
 
 const AudiovisualSchema = new Schema({
@@ -22,9 +22,19 @@ const AudiovisualSchema = new Schema({
     reviews: [
         {
             type: Schema.Types.ObjectId,
-            ref: audiovisualReview
+            ref: 'Review'
         }
     ]
 });
+
+AudiovisualSchema.post('findOneAndDelete', async function (doc) {
+    if (doc) {
+        await Review.deleteMany({
+            _id: {
+                $in: doc.reviews
+            }
+        })
+    }
+})
 
 module.exports = mongoose.model('Audiovisual', AudiovisualSchema);

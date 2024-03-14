@@ -1,0 +1,70 @@
+<% layout('layouts/boilerplate') %>
+    <h2>
+        Review - <%= review.title %> (Audiovisual: <%= audiovisual.title%>)
+    </h2>
+    <hr>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title fw-bold">
+                <%= review.title %>
+            </h5>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">Where:</span>
+                <%= review.where %>
+            </div>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">When:</span>
+                <%= review.when%>
+            </div>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">Notes:</span>
+                <%= review.notes %>
+            </div>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">Date added:</span>
+                <%= review.date_added%>
+            </div>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">Favorite:</span>
+                <% if(review.favorite) { %>
+                    Yes
+                    <% }else { %>
+                        No
+                        <% } %>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-between">
+        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">Delete review</button>
+        <a class="btn btn-primary" href="/audiovisuals/<%=audiovisual._id%>/reviews">Back to reviews of <%=
+                audiovisual.title %></a>
+    </div>
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure you want to delete <%= review.title
+                            %> of <%= audiovisual.title %>
+                    </h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <form action="/audiovisuals/<%=audiovisual._id%>/reviews/<%=review._id %>?_method=DELETE"
+                        method="POST">
+                        <button class="btn btn-danger">Delete review</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,38 @@
+<% layout('layouts/boilerplate') %>
+    <h2>All reviews of <%= audiovisual.title%>
+    </h2>
+
+    <div class="d-flex flex-row justify-content-end">
+        <a class="btn btn-success" href="/audiovisuals/<%=audiovisual._id%>/reviews/new">New review of <%=
+                audiovisual.title %></a>
+    </div>
+    <hr>
+
+    <% for(let review of audiovisual.reviews) { %>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title fw-bold">
+                    <%= review.title %>
+                </h5>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Rating:</span>
+                    <%= review.rating %>
+                </div>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Date added:</span>
+                    <%= review.date_added %>
+                </div>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Favorite:</span>
+                    <% if(review.favorite) { %>
+                        Yes
+                        <% }else { %>
+                            No
+                            <% } %>
+                </div>
+
+                <a class="btn btn-primary mt-3" href="/audiovisuals/<%= audiovisual._id %>/reviews/<%= review._id%>">See
+                    review</a>
+            </div>
+        </div>
+        <% } %>

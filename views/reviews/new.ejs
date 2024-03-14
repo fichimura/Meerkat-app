@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+    <h2>New review of <%= audiovisual.title %>
+    </h2>
+
+    <form action="/audiovisuals/<%= audiovisual._id %>/reviews" method="POST" class="validate-form" novalidate>
+        <div class="mb-2">
+            <label for="where">Review title</label>
+            <input class="form-control" id="where" type=" text" name="review[title]">
+        </div>
+
+        <div class="mb-2">
+            <div class="d-flex flex-row">
+                <label class="form-label" for="rating">Rating: </label>
+                <span class="fw-bold ms-2" id="rangeValue">2.5</span>
+            </div>
+            <input class="form-range" type="range" min="0" max="5" step="0.5" id="rating" name="review[rating]"
+                value="2.5" required>
+
+            <div class="invalid-feedback">You need to rate <%=audiovisual.title %> in a range of 0 to 5
+            </div>
+
+            <script>
+                let rangeInput = document.getElementById('rating');
+                let rangeValue = document.getElementById('rangeValue');
+
+                rangeInput.addEventListener('input', () => {
+                    rangeValue.textContent = rangeInput.value;
+                });
+            </script>
+        </div>
+
+        <div class="mb-2">
+            <label for="where">Where have you seen it?</label>
+            <input class="form-control" id="where" type=" text" name="review[where]">
+        </div>
+
+        <div class="mb-2">
+            <label for="when">When have you seen it?</label>
+            <input class="form-control" id="when" type="number" value="2000" max="2099" min="1920" name="review[when]">
+        </div>
+
+        <div class="mb-2 input-group">
+            <label class="input-group-text">Notes</label>
+            <textarea class=" form-control" id="notes" cols="40" rows="5" name="review[notes]" required></textarea>
+
+            <div class="invalid-feedback">You need to provide some note about <%=audiovisual.title %>
+            </div>
+        </div>
+
+        <div class="mb-2 form-check form-switch">
+            <label class=" form-check-label" for="switch">Favorite</label>
+            <input class="form-check-input me-3" type="checkbox" role="switch" id="switch">
+            <!-- Hidden input field to store boolean value -->
+            <input type="hidden" id="switchValue" name="review[favorite]">
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const switchElement = document.getElementById("switch");
+                    const switchValueInput = document.getElementById("switchValue");
+
+                    switchValueInput.value = switchElement.checked ? 'true' : 'false';
+
+                    switchElement.addEventListener('change', function () {
+                        switchValueInput.value = switchElement.checked ? 'true' : 'false';
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="d-flex flex-row justify-content-between">
+            <button class="btn btn-success mb-3 px-5">Submit</button>
+            <a href="/audiovisuals/<%=audiovisual._id%>/reviews" class="btn btn-danger mb-3 px-5">Cancel</a>
+        </div>
+    </form>

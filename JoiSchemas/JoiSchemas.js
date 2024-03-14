@@ -1,6 +1,5 @@
 const Joi = require('joi');
 
-//TODO - see other joi validations necessary
 module.exports.audiovisualSchema = Joi.object({
     audiovisual: Joi.object({
         type: Joi.string().required(),
@@ -13,5 +12,17 @@ module.exports.audiovisualSchema = Joi.object({
         duration: Joi.string().allow(''),
         listed_in: Joi.string().allow(''),
         description: Joi.string().allow('')
+    }).required()
+});
+
+const todayDate = new Date();
+module.exports.reviewSchema = Joi.object({
+    review: Joi.object({
+        title: Joi.string().allow(''),
+        rating: Joi.number().min(0).max(5).required(),
+        where: Joi.string().allow(''),
+        when: Joi.number().min(1920).max(todayDate.getFullYear()).allow(''),
+        favorite: Joi.boolean().allow(''),
+        notes: Joi.string().required()
     }).required()
 });

@@ -5,9 +5,13 @@ const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
 const flash = require('connect-flash');
+const passport = require('passport');
+const User = require('./models/user');
+const LocalStrategy = require('passport-local');
 const ExpressError = require('./utils/expressError');
 const audiovisualRoutes = require('./routes/audiovisualRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
 
@@ -39,6 +43,13 @@ const sessionSettings = {
 }
 app.use(expressSession(sessionSettings));
 app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //middleware to handle flash requests for all the templates that may use it
 app.use((req, res, next) => {

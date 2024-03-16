@@ -31,28 +31,39 @@ router.post('/', validateAudiovisual, catchAsync(async (req, res) => {
     req.body.audiovisual.date_added = todayDateFormatted;
     const audiovisual = new Audiovisual(req.body.audiovisual);
     await audiovisual.save();
+    req.flash('success', 'Successfully made an audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 }));
 
 router.get('/:audiovisual_id', catchAsync(async (req, res, next) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
+    if (!audiovisual) {
+        req.flash('error', 'Cannot find audiovisual');
+        return res.redirect('/audiovisuals');
+    }
     res.render('audiovisuals/show', { audiovisual });
 }));
 
 router.get('/:audiovisual_id/edit', catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
+    if (!audiovisual) {
+        req.flash('error', 'Cannot find audiovisual');
+        return res.redirect('/audiovisuals');
+    }
     res.render('audiovisuals/edit', { audiovisual });
 }));
 
 router.put('/:audiovisual_id', validateAudiovisual, catchAsync(async (req, res) => {
     const { audiovisual_id } = req.params;
     const audiovisual = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
+    req.flash('success', 'Successfully updated audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 }));
 
 router.delete('/:audiovisual_id', catchAsync(async (req, res) => {
     const { audiovisual_id } = req.params;
     await Audiovisual.findByIdAndDelete(audiovisual_id);
+    req.flash('success', 'Successfully deleted audiovisual')
     res.redirect('/audiovisuals');
 }));
 

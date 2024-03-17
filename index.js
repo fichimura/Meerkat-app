@@ -11,6 +11,7 @@ const LocalStrategy = require('passport-local');
 const ExpressError = require('./utils/expressError');
 const audiovisualRoutes = require('./routes/audiovisualRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const userRoutes = require('./routes/userRoutes');
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
@@ -58,6 +59,7 @@ app.use((req, res, next) => {
     next();
 })
 
+app.use('/', userRoutes);
 app.use('/audiovisuals', audiovisualRoutes);
 app.use('/', reviewRoutes);
 

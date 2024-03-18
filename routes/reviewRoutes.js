@@ -5,6 +5,7 @@ const Review = require('../models/audiovisualReview');
 const { reviewSchema } = require('../JoiSchemas/JoiSchemas');
 const ExpressError = require('../utils/expressError');
 const catchAsync = require('../utils/catchAsync');
+const { isSignedIn } = require('../middleware');
 const todayDate = new Date();
 const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
 
@@ -20,12 +21,12 @@ const validateReview = (req, res, next) => {
 }
 
 //REVIEWS ROUTES
-router.get('/reviews', catchAsync(async (req, res) => {
+router.get('/reviews', isSignedIn, catchAsync(async (req, res) => {
     const all_reviews = await Review.find({});
     res.render('reviews/index', { all_reviews });
 }));
 
-router.get('/audiovisuals/:audiovisual_id/reviews', catchAsync(async (req, res) => {
+router.get('/audiovisuals/:audiovisual_id/reviews', isSignedIn, catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('reviews');
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
@@ -34,7 +35,7 @@ router.get('/audiovisuals/:audiovisual_id/reviews', catchAsync(async (req, res) 
     res.render('reviews/showAllReviews', { audiovisual });
 }));
 
-router.get('/audiovisuals/:audiovisual_id/reviews/new', catchAsync(async (req, res) => {
+router.get('/audiovisuals/:audiovisual_id/reviews/new', isSignedIn, catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
@@ -43,7 +44,7 @@ router.get('/audiovisuals/:audiovisual_id/reviews/new', catchAsync(async (req, r
     res.render('reviews/new', { audiovisual });
 }));
 
-router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async (req, res) => {
+router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', isSignedIn, catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
     const review = await Review.findById(req.params.review_id);
     if (!audiovisual) {
@@ -57,7 +58,7 @@ router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async 
     res.render('reviews/showReview', { audiovisual, review });
 }));
 
-router.post('/audiovisuals/:audiovisual_id/reviews', validateReview, catchAsync(async (req, res) => {
+router.post('/audiovisuals/:audiovisual_id/reviews', isSignedIn, validateReview, catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
     const review = new Review(req.body.review);
     if (!review.title) review.title = todayDateFormatted + " - " + audiovisual.title;
@@ -69,7 +70,7 @@ router.post('/audiovisuals/:audiovisual_id/reviews', validateReview, catchAsync(
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 }));
 
-router.delete('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async (req, res) => {
+router.delete('/audiovisuals/:audiovisual_id/reviews/:review_id', isSignedIn, catchAsync(async (req, res) => {
     const { audiovisual_id, review_id } = req.params;
     await Audiovisual.findByIdAndUpdate(audiovisual_id, { $pull: { reviews: review_id } });
     await Review.findByIdAndDelete(req.params.review_id);

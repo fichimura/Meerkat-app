@@ -20,7 +20,7 @@ const validateAudiovisual = (req, res, next) => {
 }
 
 
-router.get('/', isSignedIn, catchAsync(async (req, res) => {
+router.get('/', catchAsync(async (req, res) => {
     const all_audiovisuals = await Audiovisual.find({});
     res.render('audiovisuals/index', { all_audiovisuals });
 }));

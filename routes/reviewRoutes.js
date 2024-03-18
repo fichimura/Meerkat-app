@@ -21,12 +21,12 @@ const validateReview = (req, res, next) => {
 }
 
 //REVIEWS ROUTES
-router.get('/reviews', isSignedIn, catchAsync(async (req, res) => {
+router.get('/reviews', catchAsync(async (req, res) => {
     const all_reviews = await Review.find({});
     res.render('reviews/index', { all_reviews });
 }));
 
-router.get('/audiovisuals/:audiovisual_id/reviews', isSignedIn, catchAsync(async (req, res) => {
+router.get('/audiovisuals/:audiovisual_id/reviews', catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('reviews');
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
@@ -44,7 +44,7 @@ router.get('/audiovisuals/:audiovisual_id/reviews/new', isSignedIn, catchAsync(a
     res.render('reviews/new', { audiovisual });
 }));
 
-router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', isSignedIn, catchAsync(async (req, res) => {
+router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
     const review = await Review.findById(req.params.review_id);
     if (!audiovisual) {

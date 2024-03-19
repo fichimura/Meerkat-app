@@ -1,6 +1,7 @@
 const { audiovisualSchema, reviewSchema } = require('./JoiSchemas/JoiSchemas');
 const ExpressError = require('./utils/expressError');
 const Audiovisual = require('./models/audiovisuals');
+const Review = require('./models/audiovisualReview');
 
 module.exports.isSignedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -46,4 +47,14 @@ module.exports.validateReview = (req, res, next) => {
     } else {
         next();
     }
+}
+
+module.exports.isReviewAuthor = async (req, res, next) => {
+    const { audiovisual_id, review_id } = req.params;
+    const review = await Review.findById(review_id);
+    if (!review.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that');
+        return res.redirect(`/audiovisuals/${audiovisual_id}`);
+    }
+    next();
 }

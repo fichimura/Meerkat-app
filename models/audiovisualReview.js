@@ -10,6 +10,10 @@ const audiovisualReviewSchema = new Schema({
     where: String,
     when: Number,
     favorite: Boolean,
+    author: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    },
     notes:
     {
         type: String,

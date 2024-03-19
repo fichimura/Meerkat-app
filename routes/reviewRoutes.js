@@ -6,6 +6,7 @@ const { reviewSchema } = require('../JoiSchemas/JoiSchemas');
 const ExpressError = require('../utils/expressError');
 const catchAsync = require('../utils/catchAsync');
 const { isSignedIn } = require('../middleware');
+const audiovisualReview = require('../models/audiovisualReview');
 const todayDate = new Date();
 const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
 
@@ -27,7 +28,8 @@ router.get('/reviews', catchAsync(async (req, res) => {
 }));
 
 router.get('/audiovisuals/:audiovisual_id/reviews', catchAsync(async (req, res) => {
-    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('reviews');
+    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('reviews').populate('author');
+    console.log(audiovisual);
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
         return res.redirect('/audiovisuals');
@@ -46,7 +48,8 @@ router.get('/audiovisuals/:audiovisual_id/reviews/new', isSignedIn, catchAsync(a
 
 router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
-    const review = await Review.findById(req.params.review_id);
+    const review = await Review.findById(req.params.review_id).populate('author');
+    console.log(review);
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
         return res.redirect('/audiovisuals');
@@ -61,6 +64,7 @@ router.get('/audiovisuals/:audiovisual_id/reviews/:review_id', catchAsync(async 
 router.post('/audiovisuals/:audiovisual_id/reviews', isSignedIn, validateReview, catchAsync(async (req, res) => {
     const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
     const review = new Review(req.body.review);
+    review.author = res.locals.currentUser;
     if (!review.title) review.title = todayDateFormatted + " - " + audiovisual.title;
     review.date_added = todayDateFormatted;
     audiovisual.reviews.push(review);

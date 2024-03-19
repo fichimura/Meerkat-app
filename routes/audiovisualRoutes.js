@@ -21,7 +21,7 @@ const validateAudiovisual = (req, res, next) => {
 
 
 router.get('/', catchAsync(async (req, res) => {
-    const all_audiovisuals = await Audiovisual.find({});
+    const all_audiovisuals = await Audiovisual.find({}).populate('author');
     res.render('audiovisuals/index', { all_audiovisuals });
 }));
 
@@ -32,13 +32,14 @@ router.get('/new', isSignedIn, (req, res) => {
 router.post('/', isSignedIn, validateAudiovisual, catchAsync(async (req, res) => {
     req.body.audiovisual.date_added = todayDateFormatted;
     const audiovisual = new Audiovisual(req.body.audiovisual);
+    audiovisual.author = req.user._id;
     await audiovisual.save();
     req.flash('success', 'Successfully made an audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 }));
 
 router.get('/:audiovisual_id', catchAsync(async (req, res, next) => {
-    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
+    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('author');
     if (!audiovisual) {
         req.flash('error', 'Cannot find audiovisual');
         return res.redirect('/audiovisuals');

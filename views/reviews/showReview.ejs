@@ -6,9 +6,18 @@
 
     <div class="card mb-3">
         <div class="card-body">
-            <h5 class="card-title fw-bold">
+            <h3 class="card-title fw-bold">
                 <%= review.title %>
-            </h5>
+            </h3>
+
+            <div class="d-flex flex-row">
+                <span class="fw-bold">Author of the review:</span>
+                <% if(review.author){ %>
+                    <%= review.author.username %>
+                        <% }else {%>
+                            <span class="fw-light fst-italic">Review with no author</span>
+                            <%} %>
+            </div>
 
             <div class="d-flex flex-row">
                 <span class="fw-bold">Where:</span>

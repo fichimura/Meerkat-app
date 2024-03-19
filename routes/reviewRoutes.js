@@ -2,24 +2,10 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const Audiovisual = require('../models/audiovisuals');
 const Review = require('../models/audiovisualReview');
-const { reviewSchema } = require('../JoiSchemas/JoiSchemas');
-const ExpressError = require('../utils/expressError');
 const catchAsync = require('../utils/catchAsync');
-const { isSignedIn } = require('../middleware');
-const audiovisualReview = require('../models/audiovisualReview');
+const { isSignedIn, validateReview } = require('../middleware');
 const todayDate = new Date();
 const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
-
-//Middleware
-const validateReview = (req, res, next) => {
-    const { error } = reviewSchema.validate(req.body);
-    if (error) {
-        const msg = error.details.map(el => el.message).join(',');
-        throw new ExpressError(msg, 400);
-    } else {
-        next();
-    }
-}
 
 //REVIEWS ROUTES
 router.get('/reviews', catchAsync(async (req, res) => {

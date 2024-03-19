@@ -1,3 +1,7 @@
+const { audiovisualSchema, reviewSchema } = require('./JoiSchemas/JoiSchemas');
+const ExpressError = require('./utils/expressError');
+const Audiovisual = require('./models/audiovisuals');
+
 module.exports.isSignedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.returnTo = req.originalUrl;
@@ -12,4 +16,34 @@ module.exports.storeReturnTo = (req, res, next) => {
         res.locals.returnTo = req.session.returnTo;
     }
     next();
+}
+
+module.exports.validateAudiovisual = (req, res, next) => {
+    const { error } = audiovisualSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+}
+
+module.exports.isAuthor = async (req, res, next) => {
+    const { audiovisual_id } = req.params;
+    const audiovisual = await Audiovisual.findById(audiovisual_id);
+    if (!audiovisual.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that');
+        return res.redirect(`/audiovisuals/${audiovisual._id}`);
+    }
+    next();
+}
+
+module.exports.validateReview = (req, res, next) => {
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
 }

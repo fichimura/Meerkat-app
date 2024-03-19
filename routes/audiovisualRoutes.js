@@ -53,14 +53,23 @@ router.get('/:audiovisual_id/edit', isSignedIn, catchAsync(async (req, res) => {
         req.flash('error', 'Cannot find audiovisual');
         return res.redirect('/audiovisuals');
     }
+    if (!audiovisual.author.equals(req.user._id)) {
+        req.flash('error', 'You cannot edit this');
+        return res.redirect(`/audiovisuals/${audiovisual._id}`);
+    }
     res.render('audiovisuals/edit', { audiovisual });
 }));
 
 router.put('/:audiovisual_id', isSignedIn, validateAudiovisual, catchAsync(async (req, res) => {
     const { audiovisual_id } = req.params;
-    const audiovisual = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
+    const audiovisual = await Audiovisual.findById(audiovisual_id);
+    if (!audiovisual.author.equals(req.user._id)) {
+        req.flash('error', 'You do not have permission to do that');
+        return res.redirect(`/audiovisuals/${audiovisual._id}`);
+    }
+    const audiovisual2 = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
     req.flash('success', 'Successfully updated audiovisual');
-    res.redirect(`/audiovisuals/${audiovisual._id}`);
+    res.redirect(`/audiovisuals/${audiovisual2._id}`);
 }));
 
 router.delete('/:audiovisual_id', isSignedIn, catchAsync(async (req, res) => {

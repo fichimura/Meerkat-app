@@ -1,60 +1,22 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-const Audiovisual = require('../models/audiovisuals');
+const audiovisualController = require('../controllers/audiovisualControllers');
 const catchAsync = require('../utils/catchAsync');
 const { isSignedIn, isAuthor, validateAudiovisual } = require('../middleware');
-const todayDate = new Date();
-const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
 
-router.get('/', catchAsync(async (req, res) => {
-    const all_audiovisuals = await Audiovisual.find({}).populate('author');
-    res.render('audiovisuals/index', { all_audiovisuals });
-}));
+router.get('/', catchAsync(audiovisualController.index));
 
-router.get('/new', isSignedIn, (req, res) => {
-    res.render('audiovisuals/new');
-});
+router.get('/new', isSignedIn, audiovisualController.renderNewForm);
 
-router.post('/', isSignedIn, validateAudiovisual, catchAsync(async (req, res) => {
-    req.body.audiovisual.date_added = todayDateFormatted;
-    const audiovisual = new Audiovisual(req.body.audiovisual);
-    audiovisual.author = req.user._id;
-    await audiovisual.save();
-    req.flash('success', 'Successfully made an audiovisual');
-    res.redirect(`/audiovisuals/${audiovisual._id}`);
-}));
+router.post('/', isSignedIn, validateAudiovisual, catchAsync(audiovisualController.createAudiovisual));
 
-router.get('/:audiovisual_id', catchAsync(async (req, res, next) => {
-    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id).populate('author');
-    if (!audiovisual) {
-        req.flash('error', 'Cannot find audiovisual');
-        return res.redirect('/audiovisuals');
-    }
-    res.render('audiovisuals/show', { audiovisual });
-}));
+router.get('/:audiovisual_id', catchAsync(audiovisualController.showAudiovisual));
 
-router.get('/:audiovisual_id/edit', isSignedIn, isAuthor, catchAsync(async (req, res) => {
-    const audiovisual = await Audiovisual.findById(req.params.audiovisual_id);
-    if (!audiovisual) {
-        req.flash('error', 'Cannot find audiovisual');
-        return res.redirect('/audiovisuals');
-    }
-    res.render('audiovisuals/edit', { audiovisual });
-}));
+router.get('/:audiovisual_id/edit', isSignedIn, isAuthor, catchAsync(audiovisualController.showEditAudiovisual));
 
-router.put('/:audiovisual_id', isSignedIn, isAuthor, validateAudiovisual, catchAsync(async (req, res) => {
-    const { audiovisual_id } = req.params;
-    const audiovisual = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
-    req.flash('success', 'Successfully updated audiovisual');
-    res.redirect(`/audiovisuals/${audiovisual._id}`);
-}));
+router.put('/:audiovisual_id', isSignedIn, isAuthor, validateAudiovisual, catchAsync(audiovisualController.editAudiovisual));
 
-router.delete('/:audiovisual_id', isSignedIn, isAuthor, catchAsync(async (req, res) => {
-    const { audiovisual_id } = req.params;
-    await Audiovisual.findByIdAndDelete(audiovisual_id);
-    req.flash('success', 'Successfully deleted audiovisual')
-    res.redirect('/audiovisuals');
-}));
+router.delete('/:audiovisual_id', isSignedIn, isAuthor, catchAsync(audiovisualController.deleteAudiovisual));
 
 
 module.exports = router;

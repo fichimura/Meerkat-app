@@ -3,12 +3,19 @@ const router = express.Router({ mergeParams: true });
 const audiovisualController = require('../controllers/audiovisualControllers');
 const catchAsync = require('../utils/catchAsync');
 const { isSignedIn, isAuthor, validateAudiovisual } = require('../middleware');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 router.get('/', catchAsync(audiovisualController.index));
 
 router.get('/new', isSignedIn, audiovisualController.renderNewForm);
 
-router.post('/', isSignedIn, validateAudiovisual, catchAsync(audiovisualController.createAudiovisual));
+
+router.post('/', upload.single('image'), (req, res) => {
+    console.log(req.body, req.files);
+    res.send('it worked')
+});
+// router.post('/', isSignedIn, validateAudiovisual, catchAsync(audiovisualController.createAudiovisual));
 
 router.get('/:audiovisual_id', catchAsync(audiovisualController.showAudiovisual));
 

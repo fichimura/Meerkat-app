@@ -2,7 +2,7 @@
     <div class="row">
         <h1 class="text-center">New audiovisual</h1>
         <div class="col-6 offset-3">
-            <form action="/audiovisuals" method="POST" class="validate-form" novalidate>
+            <form action="/audiovisuals" method="POST" class="validate-form" novalidate enctype="multipart/form-data">
                 <div class="mb-2">
                     <label class="form-label" for="type">Type</label>
                     <input class="form-control" type="text" id="type" name="audiovisual[type]" required>
@@ -41,6 +41,8 @@
                     <textarea class="form-control" type="text" id="description"
                         name="audiovisual[description]"></textarea>
                 </div>
+
+                <input type="file" name="image" class="mb-2" multiple>
 
                 <div class="d-flex flex-row justify-content-between mb-3">
                     <button class="btn btn-success">

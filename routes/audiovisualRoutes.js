@@ -4,14 +4,15 @@ const audiovisualController = require('../controllers/audiovisualControllers');
 const catchAsync = require('../utils/catchAsync');
 const { isSignedIn, isAuthor, validateAudiovisual } = require('../middleware');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const { storage } = require('../cloudinary');
+const upload = multer({ storage });
 
 router.get('/', catchAsync(audiovisualController.index));
 
 router.get('/new', isSignedIn, audiovisualController.renderNewForm);
 
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', upload.array('image'), (req, res) => {
     console.log(req.body, req.files);
     res.send('it worked')
 });

@@ -17,7 +17,7 @@
                 </span>
             </div>
             <input class="form-range" type="range" min="0" max="5" step="0.5" id="rating" name="review[rating]"
-                value="2.5" required>
+                value="<%= review.rating%>" required>
 
             <div class="invalid-feedback">You need to rate <%=audiovisual.title %> in a range of 0 to 5
             </div>

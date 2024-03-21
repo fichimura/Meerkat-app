@@ -14,8 +14,10 @@ module.exports.renderNewForm = (req, res) => {
 module.exports.createAudiovisual = async (req, res) => {
     req.body.audiovisual.date_added = todayDateFormatted;
     const audiovisual = new Audiovisual(req.body.audiovisual);
+    audiovisual.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     audiovisual.author = req.user._id;
     await audiovisual.save();
+    console.log(audiovisual);
     req.flash('success', 'Successfully made an audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 };
@@ -41,6 +43,9 @@ module.exports.showEditAudiovisual = async (req, res) => {
 module.exports.editAudiovisual = async (req, res) => {
     const { audiovisual_id } = req.params;
     const audiovisual = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    audiovisual.images.push(...imgs);
+    await audiovisual.save();
     req.flash('success', 'Successfully updated audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 };

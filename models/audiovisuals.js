@@ -7,6 +7,10 @@ const AudiovisualSchema = new Schema({
         type: String,
         required: [true, "Audiovisual must have a type."]
     },
+    images: [{
+        url: String,
+        filename: String
+    }],
     title: {
         type: String,
         required: [true, "Audiovisual must have a title."]

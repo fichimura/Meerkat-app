@@ -10,8 +10,10 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
     cloudinary,
-    folder: 'Meerkat',
-    allowedFormats: ['jpeg', 'png', 'jpg']
+    params: {
+        folder: 'Meerkat',
+        allowedFormats: ['jpeg', 'png', 'jpg']
+    }
 });
 
 module.exports = {

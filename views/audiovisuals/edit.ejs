@@ -2,8 +2,8 @@
     <div class="row">
         <h2 class="text-center">Edit audiovisual</h2>
         <div class="col-6 offset-3">
-            <form action="/audiovisuals/<%=audiovisual._id%>?_method=PUT" method="POST" class="validate-form"
-                novalidate>
+            <form action="/audiovisuals/<%=audiovisual._id%>?_method=PUT" method="POST" class="validate-form" novalidate
+                enctype="multipart/form-data">
         </div>
         <div class="mb-3 fw-bold">
             This audiovisual was added in <%= audiovisual.date_added %>
@@ -53,6 +53,14 @@
             <textarea class="form-control" type="text" id="description"
                 name="audiovisual[description]"> <%=audiovisual.description %></textarea>
         </div>
+
+        <div class="input-group mb-3">
+            <input type="file" class="form-control" id="image" name="image" multiple>
+            <label class="input-group-text" for="image">Upload</label>
+        </div>
+
+
+
 
         <div class="d-flex flex-row justify-content-between mb-3">
             <button class="btn btn-secondary">

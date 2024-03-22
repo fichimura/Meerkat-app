@@ -59,7 +59,15 @@
             <label class="input-group-text" for="image">Upload</label>
         </div>
 
-
+        <div class="mb-3">
+            <% audiovisual.images.forEach((img, index)=> { %>
+                <img class="img-thumbnail" src="<%=img.url%>">
+                <div class="form-check-inline">
+                    <input type="checkbox" id="image_<%=index%>" name="deleteImages[]" value="<%=img.filename %>">
+                    <label for="image_<%=index%>">Delete</label>
+                </div>
+                <%})%>
+        </div>
 
 
         <div class="d-flex flex-row justify-content-between mb-3">

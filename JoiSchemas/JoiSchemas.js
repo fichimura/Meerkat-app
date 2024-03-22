@@ -12,7 +12,8 @@ module.exports.audiovisualSchema = Joi.object({
         duration: Joi.string().allow(''),
         listed_in: Joi.string().allow(''),
         description: Joi.string().allow('')
-    }).required()
+    }).required(),
+    deleteImages: Joi.array()
 });
 
 const todayDate = new Date();

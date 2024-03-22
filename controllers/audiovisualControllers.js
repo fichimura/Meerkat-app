@@ -1,6 +1,8 @@
 const Audiovisual = require('../models/audiovisuals');
 const todayDate = new Date();
 const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth() + 1) + "-" + todayDate.getDate();
+const { cloudinary } = require('../cloudinary/index');
+
 
 module.exports.index = async (req, res) => {
     const all_audiovisuals = await Audiovisual.find({}).populate('author');
@@ -43,9 +45,18 @@ module.exports.showEditAudiovisual = async (req, res) => {
 module.exports.editAudiovisual = async (req, res) => {
     const { audiovisual_id } = req.params;
     const audiovisual = await Audiovisual.findByIdAndUpdate(audiovisual_id, { ...req.body.audiovisual });
+    console.log(audiovisual);
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     audiovisual.images.push(...imgs);
     await audiovisual.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await audiovisual.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } });
+    }
+
+    console.log(audiovisual);
     req.flash('success', 'Successfully updated audiovisual');
     res.redirect(`/audiovisuals/${audiovisual._id}`);
 };

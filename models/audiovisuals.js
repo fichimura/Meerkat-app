@@ -2,15 +2,21 @@ const mongoose = require('mongoose');
 const Review = require('./audiovisualReview');
 const Schema = mongoose.Schema;
 
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
+
+ImageSchema.virtual('thumbnail').get(function () {
+    return this.url.replace('/upload', '/upload/w_200');
+});
+
 const AudiovisualSchema = new Schema({
     type: {
         type: String,
         required: [true, "Audiovisual must have a type."]
     },
-    images: [{
-        url: String,
-        filename: String
-    }],
+    images: [ImageSchema],
     title: {
         type: String,
         required: [true, "Audiovisual must have a title."]

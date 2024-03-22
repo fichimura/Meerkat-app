@@ -78,7 +78,6 @@ module.exports.showEditReview = async (req, res) => {
 module.exports.editReview = async (req, res) => {
     const { audiovisual_id, review_id } = req.params;
     const review = await Review.findByIdAndUpdate(review_id, { ...req.body.review });
-    console.log(review);
     req.flash('success', 'Successfully updated audiovisual');
     res.redirect(`/audiovisuals/${audiovisual_id}/reviews/${review._id}`);
 };

@@ -8,15 +8,36 @@
                 <h5 class="card-title fw-bold">
                     <%= review.title %>
                 </h5>
-                <div>
+                <div class="d-flex flex-row card-subtitle mb-2 text-muted">
+                    <span class="fw-bold">Author:</span>
+                    <% if(review.author){ %>
+                        <%= review.author.username %>
+                            <% }else {%>
+                                <span class="fw-light fst-italic">Review with no author</span>
+                                <%} %>
+                </div>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Rating:</span>
                     <%= review.rating %>
                 </div>
-                <div>
-                    <%= review.favorite %>
-                </div>
-                <div>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Date added:</span>
                     <%= review.date_added %>
                 </div>
+                <div class="d-flex flex-row">
+                    <span class="fw-bold">Favorite:</span>
+                    <% if(review.favorite) { %>
+                        Yes
+                        <% }else { %>
+                            No
+                            <% } %>
+                </div>
+
+                <% if(reviewAudiovisual){ %>
+                    <a class="btn btn-primary mt-3"
+                        href="/audiovisuals/<%= reviewAudiovisual[0]._id %>/reviews/<%= review._id%>">See
+                        review</a>
+                    <% }%>
             </div>
         </div>
         <% } %>

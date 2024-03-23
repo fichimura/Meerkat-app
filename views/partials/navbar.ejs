@@ -13,9 +13,11 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/audiovisuals">Audiovisuals</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/userReviews">User reviews</a>
-                </li>
+                <%if(currentUser){ %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/userReviews">User reviews</a>
+                    </li>
+                    <%}%>
             </ul>
         </div>
         <div class="navbar-nav ml-auto">

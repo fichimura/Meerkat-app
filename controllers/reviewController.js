@@ -6,7 +6,6 @@ const todayDateFormatted = todayDate.getFullYear() + "-" + (todayDate.getMonth()
 module.exports.showUserReviews = async (req, res) => {
     const user_reviews = await Review.find({ author: req.user._id });
     const reviewAudiovisual = await Audiovisual.find({ reviews: { $in: [...user_reviews] } });
-    console.log(reviewAudiovisual[0]._id);
     res.render('reviews/userReviews', { user_reviews, reviewAudiovisual });
 };
 
@@ -79,6 +78,7 @@ module.exports.showEditReview = async (req, res) => {
 
 module.exports.editReview = async (req, res) => {
     const { audiovisual_id, review_id } = req.params;
+    if (!req.body.review.title) req.body.review.title = todayDateFormatted;
     const review = await Review.findByIdAndUpdate(review_id, { ...req.body.review });
     req.flash('success', 'Successfully updated audiovisual');
     res.redirect(`/audiovisuals/${audiovisual_id}/reviews/${review._id}`);

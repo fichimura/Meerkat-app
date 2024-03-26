@@ -2,7 +2,6 @@ if (process.env.NODE_ENV !== 'production') {
     require('dotenv').config();
 }
 
-
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -17,6 +16,7 @@ const ExpressError = require('./utils/expressError');
 const audiovisualRoutes = require('./routes/audiovisualRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const userRoutes = require('./routes/userRoutes');
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
@@ -49,7 +49,7 @@ const sessionSettings = {
 }
 app.use(expressSession(sessionSettings));
 app.use(flash());
-
+app.use(mongoSanitize());
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
@@ -59,6 +59,7 @@ passport.deserializeUser(User.deserializeUser());
 
 //middleware
 app.use((req, res, next) => {
+    console.log(req.query);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');

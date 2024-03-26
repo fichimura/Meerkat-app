@@ -1,6 +1,8 @@
 <% layout('layouts/boilerplate') %>
 
-    <h2>Meerkat Reviews</h2>
+    <h2>
+        <%=currentUser.username%> Reviews
+    </h2>
     <hr>
     <% for(let review of user_reviews) { %>
         <div class="card mb-3">

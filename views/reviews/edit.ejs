@@ -43,9 +43,9 @@
                 value="<%= review.when%>"">
         </div>
 
-        <div class=" mb-2 input-group">
-            <label class="input-group-text">Notes</label>
-            <textarea class=" form-control" id="notes" cols="40" rows="5" name="review[notes]"
+        <div class=" mb-2">
+            <label for="notes" class="form-label">Notes</label>
+            <textarea class="form-control" id="notes" rows="5" name="review[notes]"
                 required><%=review.notes %></textarea>
 
             <div class="invalid-feedback">You need to provide some note about <%=audiovisual.title %>

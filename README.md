@@ -1,7 +1,8 @@
 <h1>Meerkat app</h1>
 
 <h2>Description</h2> 
-<p>Meerkat is an app to test node, mongodb(Mongoose), express, ejs, and other aspects of development. In this scenario, this application is developed to enable the user to save its favorite Audiovisuals. This category gathers movies, series, documentaries and others type of productions similar to these ones.</p>
+<p>Meerkat is an app to test node, mongodb(Mongoose), express, ejs, and other aspects of development. In this scenario, this application is developed to enable the user to save its favorite Audiovisuals. This category gathers movies, series, documentaries and others type of productions similar to these ones.Also the user can make reviews about these audiovisuals in the application.            
+The app is the result of a course in Udemy, which is taught by Colt Steele. The name of the course is <strong>The Web Developer Bootcamp 2024.</strong></p>
 
 <h2>Installation</h2>
 <h3>Main install</h3>

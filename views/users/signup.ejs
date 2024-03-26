@@ -1,17 +1,21 @@
 <% layout('layouts/boilerplate') %>
     <h2>Sign up</h2>
-    <form action="signup" method="POST" class="validate-form" novalidate>
-        <div class="mb-2">
-            <label class="form-label" for="username">Username</label>
-            <input class="form-control" type="text" id="username" name="[username]" required>
-        </div>
-        <div class="mb-2">
-            <label class="form-label" for="email">Email</label>
-            <input class="form-control" type="email" id="email" name="[email]" required>
-        </div>
-        <div class="mb-2">
-            <label class="form-label" for="password">Password</label>
-            <input class="form-control" type="password" id="password" name="[password]" required>
-        </div>
-        <button class="btn btn-success">Sign up</button>
-    </form>
+    <div class="container d-flex justify-content-center">
+        <form action="signup" method="POST" class="validate-form" novalidate>
+            <div class="mb-2">
+                <label class="form-label" for="username">Username</label>
+                <input class="form-control" type="text" id="username" name="[username]" autofocus required>
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="email">Email</label>
+                <input class="form-control" type="email" id="email" name="[email]" required>
+            </div>
+            <div class="mb-2">
+                <label class="form-label" for="password">Password</label>
+                <input class="form-control" type="password" id="password" name="[password]" required>
+            </div>
+            <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-success d-grid gap-2">Sign up</button>
+            </div>
+        </form>
+    </div>

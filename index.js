@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const expressSession = require('express-session');
+const MongoStore = require('connect-mongo');
 const flash = require('connect-flash');
 const passport = require('passport');
 const User = require('./models/user');
@@ -19,8 +20,13 @@ const userRoutes = require('./routes/userRoutes');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
+// 'mongodb://127.0.0.1:27017/meerkat-app'
 
-mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
+// mongoose.connect(process.env.MONGO_ATLAS);
+
+const mongoUrl = 'mongodb://127.0.0.1:27017/meerkat-app';
+
+mongoose.connect(mongoUrl);
 
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "connection error: "));
@@ -38,9 +44,20 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const secret = process.env.SECRET || 'thisshouldbeabettersecret!';
+
+const store = MongoStore.create({
+    mongoUrl: mongoUrl,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
+        secret
+    }
+});
+
 const sessionSettings = {
+    store,
     name: 'session',
-    secret: 'secretTest!',
+    secret,
     resave: false,
     saveUninitialized: true,
     cookie: {

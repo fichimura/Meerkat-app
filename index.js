@@ -20,11 +20,10 @@ const userRoutes = require('./routes/userRoutes');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
-// 'mongodb://127.0.0.1:27017/meerkat-app'
+const mongoUrl = process.env.MONGO_ATLAS;
 
-// mongoose.connect(process.env.MONGO_ATLAS);
+mongoose.connect(mongoUrl);
 
-const mongoUrl = 'mongodb://127.0.0.1:27017/meerkat-app';
 
 mongoose.connect(mongoUrl);
 

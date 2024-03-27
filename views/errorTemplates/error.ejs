@@ -3,7 +3,9 @@
         <h4 class="alert-heading">
             <%= err.message%>
         </h4>
-        <div class="text-wrap">
-            <%= err.stack %>
-        </div>
+        <%if(process.env.NODE_ENV !=='production' ) { %>
+            <div class="text-wrap">
+                <%= err.stack %>
+            </div>
+            <% }%>
     </div>

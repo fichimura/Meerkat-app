@@ -61,7 +61,7 @@
 
         <div class="mb-3">
             <% audiovisual.images.forEach((img, index)=> { %>
-                <img class="img-thumbnail" src="<%=img.thumbnail%>">
+                <img crossorigin="anonymous" class="img-thumbnail" src="<%=img.thumbnail%>">
                 <div class="form-check-inline">
                     <input type="checkbox" id="image_<%=index%>" name="deleteImages[]" value="<%=img.filename %>">
                     <label for="image_<%=index%>">Delete</label>

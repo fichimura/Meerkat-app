@@ -17,6 +17,7 @@ const audiovisualRoutes = require('./routes/audiovisualRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
 const userRoutes = require('./routes/userRoutes');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 
 mongoose.connect('mongodb://127.0.0.1:27017/meerkat-app');
@@ -38,11 +39,13 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const sessionSettings = {
+    name: 'session',
     secret: 'secretTest!',
     resave: false,
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
+        // secure: true,
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7
     }
@@ -50,6 +53,50 @@ const sessionSettings = {
 app.use(expressSession(sessionSettings));
 app.use(flash());
 app.use(mongoSanitize());
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://res.cloudinary.com/dmv8tvtnj/"
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+    "https://res.cloudinary.com/dmv8tvtnj/"
+];
+const connectSrcUrls = ["https://res.cloudinary.com/dmv8tvtnj/"];
+const fontSrcUrls = ["https://res.cloudinary.com/dmv8tvtnj/"];
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://res.cloudinary.com/dmv8tvtnj/",
+                "https://images.unsplash.com/",
+                "https://source.unsplash.com/"
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+            mediaSrc: ["https://res.cloudinary.com/dmv8tvtnj/"],
+            childSrc: ["blob:"]
+        },
+    })
+);
+
+
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));

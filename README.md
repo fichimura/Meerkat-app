@@ -1,4 +1,4 @@
-<h1>Meerkat app</h1>
+<h1>🐾Meerkat app</h1>
 
 <h2>Description</h2> 
 <p>Meerkat is an app to test node, mongodb(Mongoose), express, ejs, and other aspects of development. In this scenario, this application is developed to enable the user to save its favorite Audiovisuals. This category gathers movies, series, documentaries and others type of productions similar to these ones.Also the user can make reviews about these audiovisuals in the application.            
@@ -29,4 +29,8 @@ First git clone this repository, then go to the directory of the application and
   
 
 Finally the port is set to 3000, so go to some browser and put ```localhost:3000```
+
+<h2>Deployed app</h2>
+Or you can access it through the following link:
+https://meerkat-5kgh.onrender.com
 

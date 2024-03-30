@@ -10,5 +10,6 @@ gulp.task('lint', function () {
         .pipe(eslint.failAfterError());
 });
 
+
 // Define the default task
 gulp.task('default', gulp.series('lint'));
